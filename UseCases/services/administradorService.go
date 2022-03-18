@@ -61,7 +61,7 @@ func (service *administradorService) SetUpdateService(context *gin.Context) {
 	var adminDto dto.AdministradorDTO
 
 	context.ShouldBind(&adminDto)
-	if validarAdministrador(adminDto, context, utilities.OPTION_EDIT) {
+	if validarAdministrador(adminDto, context, utilities.OPTION_CREATE) {
 		return
 	}
 	err := smapping.FillStruct(&admin, smapping.MapFields(&adminDto))
@@ -175,27 +175,7 @@ func validarAdministrador(r dto.AdministradorDTO, context *gin.Context, option i
 			validadBirdateRequiredMsg(msg.RequiredOwner(), context)
 			return true
 		}
-	case 2:
-		if r.Id == 0 {
-			msg := utilities.MessageRequired{}
-			validadRequiredMsg(msg.RequiredId(), context)
-			return true
-		}
-		if len(r.Name) == 0 {
-			msg := utilities.MessageRequired{}
-			validadRequiredMsg(msg.RequiredName(), context)
-			return true
-		}
-		if len(r.Criticidad) == 0 || r.Criticidad == "" {
-			msg := utilities.MessageRequired{}
-			validadBirdateRequiredMsg(msg.RequiredCriticidad(), context)
-			return true
-		}
-		if len(r.Owner) == 0 || r.Owner == "" {
-			msg := utilities.MessageRequired{}
-			validadBirdateRequiredMsg(msg.RequiredOwner(), context)
-			return true
-		}
+
 	}
 	return false
 }

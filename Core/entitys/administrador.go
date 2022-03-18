@@ -5,4 +5,5 @@ type Administrador struct {
 	Name       string `gorm:"type:varchar(255)" json:"name"`
 	Criticidad string `gorm:"type:varchar(255)" json:"criticidad"`
 	Owner      string `gorm:"type:varchar(255)" json:"owner"`
+	Token      string `gorm:"-" json:"token,omitempty"`
 }

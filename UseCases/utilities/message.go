@@ -5,16 +5,16 @@ type MessageRequired struct {
 }
 
 func (msg MessageRequired) RequiredId() string {
-	return "The id is required"
+	return "El id es requerido"
 }
 
 func (msg MessageRequired) RequiredName() string {
-	return "The name is required"
+	return "El nombre es requerido"
 }
 
 func (msg MessageRequired) RequiredCriticidad() string {
-	return "The criticidad is required"
+	return "La criticidad es requerido"
 }
 func (msg MessageRequired) RequiredOwner() string {
-	return "The owner is required"
+	return "El owner es requerido"
 }

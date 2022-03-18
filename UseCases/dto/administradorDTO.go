@@ -6,3 +6,8 @@ type AdministradorDTO struct {
 	Criticidad string `json:"criticidad" form:"criticidad" binding:"required"`
 	Owner      string `json:"owner" form:"owner" binding:"required"`
 }
+
+type LoginDTO struct {
+	Name  string `json:"name" form:"name" binding:"required"`
+	Owner string `json:"owner" form:"owner" binding:"required"`
+}

@@ -10,6 +10,7 @@ type AdministradorRepository interface {
 	GetAllAdministrador() ([]entitys.Administrador, error)
 	SetRemoveAdministrador(admin entitys.Administrador) (bool, error)
 	GetFindAdministradorById(Id uint) (entitys.Administrador, error)
+	VerifyCredential(Name string, Owner string) interface{}
 }
 type administradorConnection struct {
 	connection *gorm.DB
@@ -61,4 +62,15 @@ func (db *administradorConnection) GetAllAdministrador() ([]entitys.Administrado
 	err := db.connection.Find(&admins).Error
 	defer entitys.Closedb()
 	return admins, err
+}
+
+func (db *administradorConnection) VerifyCredential(Name string, Owner string) interface{} {
+	var user entitys.Administrador
+	err := db.connection.Where("name = ?", Name).Where("owner = ?", Owner).Find(&user).Error
+	defer entitys.Closedb()
+
+	if err == nil {
+		return user
+	}
+	return nil
 }

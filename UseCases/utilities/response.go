@@ -27,10 +27,10 @@ func BuildResponse(status string, message string, data interface{}) Response {
 }
 
 //BuildErrorResponse method is to inject dasta value to dynamic failed response
-func BuildErrorResponse(status string, message string, err string, data interface{}) Response {
+func BuildErrorResponse(message string, err string, data interface{}) Response {
 	splittedError := strings.Split(err, "\n")
 	res := Response{
-		Status:  status,
+		Status:  "400",
 		Message: message,
 		Error:   splittedError,
 		Data:    data,
@@ -48,10 +48,10 @@ func BuildNotFoudResponse(status string) Response {
 }
 
 //BuildErrorResponse method is to inject dasta value to dynamic failed response
-func BuildDanedResponse(status string) Response {
+func BuildDanedResponse() Response {
 	res := Response{
-		Status:  status,
-		Message: "permission denied",
+		Status:  "300",
+		Message: "Permiso denegado",
 		Error:   nil,
 	}
 
@@ -81,7 +81,7 @@ func BuildErrorAllResponseMessage(status string, message string) Response {
 func BuildCreateResponse(status string, data interface{}) Response {
 	res := Response{
 		Status:  status,
-		Message: "Create successfully",
+		Message: "Se creo éxitosamente",
 		Error:   nil,
 		Data:    data,
 	}
@@ -92,25 +92,22 @@ func BuildCreateResponse(status string, data interface{}) Response {
 func BuildUpdateResponse(status string, data interface{}) Response {
 	res := Response{
 		Status:  status,
-		Message: "Update successfully",
+		Message: "Se modifico éxitosamente",
 		Error:   nil,
 		Data:    data,
 	}
 	return res
 }
 
-//BuildErrorResponse method is to inject dasta value to dynamic failed response
 func BuildDeteleteResponse(status string, data interface{}) Response {
 	res := Response{
 		Status:  status,
-		Message: "It was successfully removed",
+		Message: "Fue eliminado con éxito",
 		Data:    data,
 	}
 	return res
 }
 
-//"Data not found", "No data with given id",
-//BuildErrorResponse method is to inject dasta value to dynamic failed response
 func BuildErrorByIdResponse(status string) Response {
 
 	res := Response{
@@ -127,6 +124,14 @@ func BuildCanNotDeteleteResponse(status string, data interface{}) Response {
 		Status:  status,
 		Message: "The record cannot be deleted",
 		Data:    data,
+	}
+	return res
+}
+func BuildNameOwnerIncorrectResponse() Response {
+	res := Response{
+		Status:  "400",
+		Message: "El Owner es incorrecto",
+		Error:   nil,
 	}
 	return res
 }
