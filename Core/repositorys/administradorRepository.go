@@ -22,20 +22,12 @@ func NewAdministradorRepository() AdministradorRepository {
 	}
 }
 
-var errChanAdministrador = make(chan error, 1)
-
 /*
 @param admin, is a struct of Administrador
 */
 func (db *administradorConnection) SetCreateAdministrador(admin entitys.Administrador) (entitys.Administrador, error) {
-
-	go func() {
-		err := db.connection.Save(&admin).Error
-		defer entitys.Closedb()
-		errChanAdministrador <- err
-	}()
-	err := <-errChanAdministrador
-
+	err := db.connection.Save(&admin).Error
+	defer entitys.Closedb()
 	return admin, err
 }
 
@@ -44,12 +36,8 @@ func (db *administradorConnection) SetCreateAdministrador(admin entitys.Administ
 */
 func (db *administradorConnection) SetRemoveAdministrador(admin entitys.Administrador) (bool, error) {
 
-	go func() {
-		err := db.connection.Delete(&admin).Error
-		defer entitys.Closedb()
-		errChanAdministrador <- err
-	}()
-	err := <-errChanAdministrador
+	err := db.connection.Delete(&admin).Error
+	defer entitys.Closedb()
 	if err == nil {
 		return true, err
 	}
@@ -62,23 +50,15 @@ func (db *administradorConnection) SetRemoveAdministrador(admin entitys.Administ
 func (db *administradorConnection) GetFindAdministradorById(Id uint) (entitys.Administrador, error) {
 
 	var admin entitys.Administrador
-	go func() {
-		err := db.connection.Find(&admin, Id).Error
-		defer entitys.Closedb()
-		errChanAdministrador <- err
-	}()
-	err := <-errChanAdministrador
+	err := db.connection.Find(&admin, Id).Error
+	defer entitys.Closedb()
 	return admin, err
 }
 
 func (db *administradorConnection) GetAllAdministrador() ([]entitys.Administrador, error) {
 
 	var admins []entitys.Administrador
-	go func() {
-		err := db.connection.Find(&admins).Error
-		defer entitys.Closedb()
-		errChanAdministrador <- err
-	}()
-	err := <-errChanAdministrador
+	err := db.connection.Find(&admins).Error
+	defer entitys.Closedb()
 	return admins, err
 }
