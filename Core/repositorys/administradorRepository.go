@@ -64,6 +64,10 @@ func (db *administradorConnection) GetAllAdministrador() ([]entitys.Administrado
 	return admins, err
 }
 
+/*
+@param Name, de tipo string
+@param Owner,de tipo string
+*/
 func (db *administradorConnection) VerifyCredential(Name string, Owner string) interface{} {
 	var user entitys.Administrador
 	err := db.connection.Where("name = ?", Name).Where("owner = ?", Owner).Find(&user).Error
