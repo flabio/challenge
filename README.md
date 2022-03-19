@@ -37,4 +37,17 @@
       la solucion: es crear una api para que los usuario tuviera accesos a la informacion que le corresponder por el criticidad,
       y se puede manipular de una manera mas facil.
       
-
+  POST /administrador
+  body
+    {
+         "name": "isabella",
+            "criticidad": "high",
+            "owner": "Isabella"
+    }
+ PUT /administrador
+  body
+    {
+         "name": "isabella",
+            "criticidad": "high",
+            "owner": "Isabella"
+    }
