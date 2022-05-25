@@ -80,16 +80,16 @@ func (service *productService) SetProductUpdateService(context *gin.Context) {
 }
 
 //service of all
-func (service *productService) GetProductAllService(context *gin.Context) {
+// func (service *productService) GetProductAllService(context *gin.Context) {
 
-	var Products, err = service.productRepository.GetAllProduct()
-	if err != nil {
-		validadErrors(err, context)
-		return
-	}
-	res := utilities.BuildResponse(http.StatusText(http.StatusOK), http.StatusText(http.StatusOK), Products)
-	context.JSON(http.StatusOK, res)
-}
+// 	var Products, err = service.productRepository.GetAllProduct()
+// 	if err != nil {
+// 		validadErrors(err, context)
+// 		return
+// 	}
+// 	res := utilities.BuildResponse(http.StatusText(http.StatusOK), http.StatusText(http.StatusOK), Products)
+// 	context.JSON(http.StatusOK, res)
+// }
 
 func (service *productService) SetProductRemoveService(context *gin.Context) {
 
@@ -118,4 +118,34 @@ func (service *productService) SetProductRemoveService(context *gin.Context) {
 		context.JSON(http.StatusOK, res)
 	}
 
+}
+func (service *productService) GetProductAllService(context *gin.Context) {
+	total := service.productRepository.GetCountProduct()
+	var limit int64 = 1
+	page, begin := utilities.Pagination(context, int(limit))
+	pages := (total / limit)
+	if (total % limit) != 0 {
+		pages++
+	}
+
+	users, err := service.productRepository.GetPaginationProduct(begin, int(limit))
+
+	if err != nil {
+		validadErrors(err, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, struct {
+		Data  []entitys.Product `json:"data"`
+		Total int64             `json:"total"`
+		Page  int               `json:"page"`
+		Pages int64             `json:"pages"`
+		Limit int64             `json:"limit"`
+	}{
+		Data:  users,
+		Total: total,
+		Page:  page,
+		Pages: pages,
+		Limit: limit,
+	})
 }
